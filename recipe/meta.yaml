@@ -10,13 +10,14 @@ source:
   sha256: 9c7c1b5dcbc3c237c500a8fb1493e14d9582146dd9b42aa8d3ffb856a3b927e0
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - cmake-no-system   # [win]
     - make              # [unix]
     - gnuconfig         # [unix]
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
@@ -43,6 +44,7 @@ outputs:
         - cmake-no-system   # [win]
         - make              # [unix]
         - gnuconfig         # [unix]
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
@@ -67,6 +69,7 @@ outputs:
         - cmake-no-system   # [win]
         - make              # [unix]
         - gnuconfig         # [unix]
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
