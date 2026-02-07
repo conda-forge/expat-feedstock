@@ -9,6 +9,8 @@ Package license: MIT
 
 Summary: Expat XML parser library in C
 
+Development: https://github.com/libexpat/libexpat
+
 Current build status
 ====================
 
