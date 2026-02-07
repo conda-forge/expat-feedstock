@@ -79,6 +79,7 @@ outputs:
 
 about:
   home: http://expat.sourceforge.net/
+  dev_url: https://github.com/libexpat/libexpat
   license: MIT
   license_family: MIT
   license_file: COPYING
