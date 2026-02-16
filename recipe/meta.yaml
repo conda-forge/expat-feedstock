@@ -1,4 +1,4 @@
-{% set version = "2.7.3" %}
+{% set version = "2.7.4" %}
 {% set ver = version|replace(".", "_") %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/libexpat/libexpat/releases/download/R_{{ ver }}/expat-{{ version }}.tar.bz2
-  sha256: 59c31441fec9a66205307749eccfee551055f2d792f329f18d97099e919a3b2f
+  sha256: e6af11b01e32e5ef64906a5cca8809eabc4beb7ff2f9a0e6aabbd42e825135d0
 
 build:
   number: 0
@@ -79,6 +79,7 @@ outputs:
 
 about:
   home: http://expat.sourceforge.net/
+  dev_url: https://github.com/libexpat/libexpat
   license: MIT
   license_family: MIT
   license_file: COPYING
