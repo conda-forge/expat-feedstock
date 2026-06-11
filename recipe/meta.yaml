@@ -8,9 +8,12 @@ package:
 source:
   url: https://github.com/libexpat/libexpat/releases/download/R_{{ ver }}/expat-{{ version }}.tar.xz
   sha256: 10b195ee78160a908388180a8fe3603d4e9a12f4755fbf5f3816b23a9d750da0
+  patches:
+    # Add missing symbol on Windows
+    - 3cdd1df2644388aff25dd0ed7128c7bb1de1a7d8.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
