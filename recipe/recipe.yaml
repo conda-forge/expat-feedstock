@@ -49,8 +49,14 @@ outputs:
         - expat ${{ version }}.*
     tests:
       - package_contents:
-          lib:
-            - expat
+          files:
+            exists:
+              - if: linux
+                then: lib/libexpat.so.*
+              - if: osx
+                then: lib/libexpat.*.dylib
+              - if: win
+                then: Library/bin/libexpat.dll
   - package:
       name: expat
     build:
