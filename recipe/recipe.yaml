@@ -29,8 +29,7 @@ outputs:
           then: lib/libexpat.*.dylib
         - if: win
           then: Library/bin/libexpat.dll
-      script:
-        file: ${{ 'install.sh' if unix else 'install.bat' if win else '' }}
+      script: install
     requirements:
       build:
         - if: win
@@ -60,8 +59,7 @@ outputs:
   - package:
       name: expat
     build:
-      script:
-        file: ${{ 'install.sh' if unix else 'install.bat' if win else '' }}
+      script: install
     requirements:
       build:
         - if: win
