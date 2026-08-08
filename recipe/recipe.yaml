@@ -53,9 +53,17 @@ outputs:
       run_constraints:
         - expat ${{ version }}.*
     tests:
-      - package_contents:
-          lib:
-            - expat
+      - if: unix
+        then:
+          package_contents:
+            lib:
+              - expat
+      - if: win
+        then:
+          package_contents:
+            files:
+              exists:
+                - Library/bin/libexpat.dll
 
   - package:
       name: expat
