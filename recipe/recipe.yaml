@@ -28,9 +28,9 @@ outputs:
         - if: win
           then: cmake-no-system
         - if: unix
-          then: make
-        - if: unix
-          then: gnuconfig
+          then:
+            - make
+            - gnuconfig
         - ${{ compiler('c') }}
         - ${{ stdlib("c") }}
         - ${{ compiler('cxx') }}
@@ -53,17 +53,13 @@ outputs:
       run_constraints:
         - expat ${{ version }}.*
     tests:
-      - if: unix
-        then:
-          package_contents:
-            lib:
-              - expat
-      - if: win
-        then:
-          package_contents:
-            files:
-              exists:
-                - Library/bin/libexpat.dll
+      - package_contents:
+          lib:
+            - if: unix
+              then: expat
+          files:
+            - if: win
+              then: Library/bin/libexpat.dll
 
   - package:
       name: expat
