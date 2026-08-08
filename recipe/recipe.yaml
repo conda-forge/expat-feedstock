@@ -19,8 +19,28 @@ build:
   number: 1
 
 outputs:
+  - staging:
+      name: expat-build
+    build:
+      script: install
+    requirements:
+      build:
+        - if: win
+          then: cmake-no-system
+        - if: unix
+          then: make
+        - if: unix
+          then: gnuconfig
+        - ${{ compiler('c') }}
+        - ${{ stdlib("c") }}
+        - ${{ compiler('cxx') }}
+      ignore_run_exports:
+        from_package:
+          - ${{ compiler('cxx') }}
+
   - package:
       name: libexpat
+    inherit: expat-build
     build:
       files:
         - if: linux
@@ -29,57 +49,33 @@ outputs:
           then: lib/libexpat.*.dylib
         - if: win
           then: Library/bin/libexpat.dll
-      script: install
     requirements:
-      build:
-        - if: win
-          then: cmake-no-system
-        - if: unix
-          then: make
-        - if: unix
-          then: gnuconfig
-        - ${{ compiler('c') }}
-        - ${{ stdlib("c") }}
-        - ${{ compiler('cxx') }}
-      ignore_run_exports:
-        from_package:
-          - ${{ compiler('cxx') }}
       run_constraints:
         - expat ${{ version }}.*
     tests:
       - package_contents:
-          files:
-            exists:
-              - if: linux
-                then: lib/libexpat.so.*
-              - if: osx
-                then: lib/libexpat.*.dylib
-              - if: win
-                then: Library/bin/libexpat.dll
+          lib:
+            - expat
+
   - package:
       name: expat
+    inherit: expat-build
     build:
-      script: install
+      files:
+        exclude:
+          - if: linux
+            then: lib/libexpat.so.*
+          - if: osx
+            then: lib/libexpat.*.dylib
+          - if: win
+            then: Library/bin/libexpat.dll
     requirements:
-      build:
-        - if: win
-          then: cmake-no-system
-        - if: unix
-          then: make
-        - if: unix
-          then: gnuconfig
-        - ${{ compiler('c') }}
-        - ${{ stdlib("c") }}
-        - ${{ compiler('cxx') }}
       host:
         - ${{ pin_subpackage('libexpat', exact=True) }}
       run:
         - ${{ pin_subpackage('libexpat', exact=True) }}
       run_exports:
         - ${{ pin_subpackage('libexpat') }}
-      ignore_run_exports:
-        from_package:
-          - ${{ compiler('cxx') }}
     tests:
       - package_contents:
           bin:
