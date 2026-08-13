@@ -22,7 +22,10 @@ outputs:
   - staging:
       name: expat-build
     build:
-      script: install
+      script:
+        file: install
+        env:
+          CONDA_BUILD_SKIP_TESTS: ${{ CONDA_BUILD_SKIP_TESTS | default("0") }}
     requirements:
       build:
         - if: win
