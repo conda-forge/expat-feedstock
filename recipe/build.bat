@@ -3,15 +3,15 @@ cmake -G "NMake Makefiles" ^
       -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -D CMAKE_C_FLAGS_RELEASE="%CFLAGS%" ^
       -D CMAKE_CXX_FLAGS_RELEASE="%CXXFLAGS%" ^
-      -D CMAKE_BUILD_TYPE=Release
+      -D CMAKE_BUILD_TYPE=Release ^
       %SRC_DIR%
 
 :: Build.
 cmake --build . --config Release
 if errorlevel 1 exit 1
 
-:: Test.
+:: Test when the target binaries can run on the build machine.
 if not "%CONDA_BUILD_SKIP_TESTS%"=="1" (
-ctest -C Release
+    ctest -C Release
+    if errorlevel 1 exit /b 1
 )
-if errorlevel 1 exit 1
