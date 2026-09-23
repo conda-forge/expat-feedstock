@@ -28,8 +28,7 @@ test:
 
 outputs:
   - name: libexpat
-    script: install.sh  # [unix]
-    script: install.bat  # [win]
+    script: {{ "install.bat" if win else "install.sh" }}
     files:
       - lib/libexpat.so.*          # [linux]
       - lib/libexpat.*.dylib       # [osx]
@@ -53,8 +52,7 @@ outputs:
         - expat {{ version }}.*
 
   - name: expat
-    script: install.sh  # [unix]
-    script: install.bat  # [win]
+    script: {{ "install.bat" if win else "install.sh" }}
     build:
       run_exports:
         # changes soname at major versions, default settings OK
