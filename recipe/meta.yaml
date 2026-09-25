@@ -88,6 +88,7 @@ about:
 extra:
   feedstock-name: expat
   recipe-maintainers:
+    - danyeaw
     - kwilcox
     - ocefpaf
     - isuruf
