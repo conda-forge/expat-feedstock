@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/libexpat/libexpat/releases/download/R_{{ ver }}/expat-{{ version }}.tar.xz
+  url: url: https://github.com/libexpat/libexpat/releases/download/R_{{ version|replace(".", "_") }}/expat-{{ version }}.tar.xz
   sha256: 1e727b8933ec51a77a9a9d9afcf8e688bce45d907c13e36ab7393fe36e703182
 
 build:
