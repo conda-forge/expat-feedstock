@@ -1,12 +1,11 @@
 {% set version = "2.8.5" %}
-{% set ver = version|replace(".", "_") %}
 
 package:
   name: expat-split
   version: {{ version }}
 
 source:
-  url: https://github.com/libexpat/libexpat/releases/download/R_{{ ver }}/expat-{{ version }}.tar.xz
+  url: https://github.com/libexpat/libexpat/releases/download/R_{{ version|replace(".", "_") }}/expat-{{ version }}.tar.xz
   sha256: 1e727b8933ec51a77a9a9d9afcf8e688bce45d907c13e36ab7393fe36e703182
 
 build:
@@ -28,8 +27,7 @@ test:
 
 outputs:
   - name: libexpat
-    script: install.sh  # [unix]
-    script: install.bat  # [win]
+    script: {{ "install.bat" if win else "install.sh" }}
     files:
       - lib/libexpat.so.*          # [linux]
       - lib/libexpat.*.dylib       # [osx]
@@ -53,8 +51,7 @@ outputs:
         - expat {{ version }}.*
 
   - name: expat
-    script: install.sh  # [unix]
-    script: install.bat  # [win]
+    script: {{ "install.bat" if win else "install.sh" }}
     build:
       run_exports:
         # changes soname at major versions, default settings OK
