@@ -3,7 +3,7 @@ About expat-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/expat-feedstock/blob/main/LICENSE.txt)
 
-Home: http://expat.sourceforge.net/
+Home: https://libexpat.github.io
 
 Package license: MIT
 
