@@ -94,16 +94,17 @@ about:
   license: MIT
   license_file: COPYING
   summary: Expat XML parser library in C
-  homepage: http://expat.sourceforge.net/
+  homepage: https://libexpat.github.io
   repository: https://github.com/libexpat/libexpat
 
 extra:
   feedstock-name: expat
   recipe-maintainers:
-    - kwilcox
-    - ocefpaf
+    - danyeaw
     - isuruf
-    - pelson
+    - kwilcox
     - mingwandroid
     - msarahan
+    - ocefpaf
+    - pelson
     - scopatz
