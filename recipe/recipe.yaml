@@ -1,0 +1,107 @@
+schema_version: 1
+
+context:
+  version: "2.8.5"
+  version_lower: ${{ version|replace(".", "_") }}
+
+recipe:
+  name: expat-split
+  version: ${{ version }}
+
+source:
+  url: https://github.com/libexpat/libexpat/releases/download/R_${{ version_lower }}/expat-${{ version }}.tar.xz
+  sha256: 1e727b8933ec51a77a9a9d9afcf8e688bce45d907c13e36ab7393fe36e703182
+
+build:
+  number: 1
+
+outputs:
+  - staging:
+      name: expat-build
+    build:
+      script:
+        file: install
+        env:
+          CONDA_BUILD_SKIP_TESTS: ${{ CONDA_BUILD_SKIP_TESTS | default("0") }}
+    requirements:
+      build:
+        - if: win
+          then: cmake-no-system
+        - if: unix
+          then:
+            - make
+            - gnuconfig
+        - ${{ compiler('c') }}
+        - ${{ stdlib("c") }}
+        - ${{ compiler('cxx') }}
+      ignore_run_exports:
+        from_package:
+          - ${{ compiler('cxx') }}
+
+  - package:
+      name: libexpat
+    inherit: expat-build
+    build:
+      files:
+        - if: linux
+          then: lib/libexpat.so.*
+        - if: osx
+          then: lib/libexpat.*.dylib
+        - if: win
+          then: Library/bin/libexpat.dll
+    requirements:
+      run_constraints:
+        - expat ${{ version }}.*
+    tests:
+      - package_contents:
+          lib:
+            - if: unix
+              then: expat
+          files:
+            - if: win
+              then: Library/bin/libexpat.dll
+
+  - package:
+      name: expat
+    inherit: expat-build
+    build:
+      files:
+        exclude:
+          - if: linux
+            then: lib/libexpat.so.*
+          - if: osx
+            then: lib/libexpat.*.dylib
+          - if: win
+            then: Library/bin/libexpat.dll
+    requirements:
+      host:
+        - ${{ pin_subpackage('libexpat', exact=True) }}
+      run:
+        - ${{ pin_subpackage('libexpat', exact=True) }}
+      run_exports:
+        - ${{ pin_subpackage('libexpat') }}
+    tests:
+      - package_contents:
+          bin:
+            - xmlwf
+      - script:
+          - xmlwf -h
+
+about:
+  license: MIT
+  license_file: COPYING
+  summary: Expat XML parser library in C
+  homepage: https://libexpat.github.io
+  repository: https://github.com/libexpat/libexpat
+
+extra:
+  feedstock-name: expat
+  recipe-maintainers:
+    - danyeaw
+    - isuruf
+    - kwilcox
+    - mingwandroid
+    - msarahan
+    - ocefpaf
+    - pelson
+    - scopatz
